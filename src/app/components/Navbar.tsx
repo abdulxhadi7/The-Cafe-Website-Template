@@ -46,26 +46,50 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [pathname]);
 
+  /* ===================== RELIABLE SCROLL ===================== */
+  const scrollToSection = (id: string, retries = 20) => {
+    const section = document.getElementById(id);
+
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
+    if (retries > 0) {
+      requestAnimationFrame(() =>
+        scrollToSection(id, retries - 1)
+      );
+    }
+  };
+
   /* ===================== CLICK HANDLER ===================== */
-  const handleClick = async (href: string) => {
+  const handleClick = (href: string) => {
     setMenuOpen(false);
+
+    const id = href.slice(1);
 
     // Already on home → just scroll
     if (pathname === "/") {
-      const section = document.getElementById(href.slice(1));
-      section?.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollToSection(id);
       return;
     }
 
     // Navigate to home + scroll
-    router.push("/" + href);
-
-    // Wait for navigation + DOM render
-    setTimeout(() => {
-      const section = document.getElementById(href.slice(1));
-      section?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 350);
+    router.push(`/?scroll=${id}`);
   };
+
+  /* ===================== POST NAV SCROLL ===================== */
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const params = new URLSearchParams(window.location.search);
+    const scrollId = params.get("scroll");
+
+    if (scrollId) {
+      scrollToSection(scrollId);
+      window.history.replaceState(null, "", "/"); // clean URL
+    }
+  }, [pathname]);
 
   return (
     <motion.nav
@@ -95,7 +119,7 @@ export default function Navbar() {
                 )}
 
                 <span
-                  className={`relative z-10 ${
+                  className={`relative z-10 transition-colors ${
                     isActive ? "text-black" : "text-white"
                   }`}
                 >
