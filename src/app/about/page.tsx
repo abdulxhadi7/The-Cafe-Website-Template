@@ -35,56 +35,35 @@ export default function About() {
         transition={{ delay: 0.3, duration: 1 }}
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl"
       >
-        {/* Card 1 */}
-        <Link href="#home" className="group relative rounded-2xl overflow-hidden">
-          <img
-            src="/images/ab1.webp"
-            alt="Our Story"
-            loading="lazy"
-            className="object-cover w-full h-64 sm:h-72 md:h-64 lg:h-72 grayscale
-                       group-hover:grayscale-0 group-hover:scale-105
-                       transition-all duration-700 ease-out"
-          />
-          <div className="absolute inset-0 bg-black/40 flex items-end justify-start p-6 transition-colors duration-500 group-hover:bg-black/20">
-            <p className="text-white text-lg font-semibold group-hover:-translate-y-1 transition-transform">
-              Our Story
-            </p>
-          </div>
-        </Link>
+        {/* Reusable Card */}
+        {[
+          { href: "#home", img: "/images/ab1.webp", title: "Our Story" },
+          { href: "#ss", img: "/images/ab2.webp", title: "Craft & Culture" },
+          { href: "#gallery", img: "/images/ab3.webp", title: "Our Spaces" },
+        ].map((item) => (
+          <Link
+            key={item.title}
+            href={item.href}
+            className="group relative rounded-2xl overflow-hidden"
+          >
+            <img
+              src={item.img}
+              alt={item.title}
+              loading="lazy"
+              className="object-cover w-full h-64 sm:h-72 md:h-64 lg:h-72
+                         transition-all duration-700 ease-out
+                         sm:grayscale sm:group-hover:grayscale-0
+                         sm:group-hover:scale-105"
+            />
 
-        {/* Card 2 */}
-        <Link href="#ss" className="group relative rounded-2xl overflow-hidden">
-          <img
-            src="/images/ab2.webp"
-            alt="Craft & Culture"
-            loading="lazy"
-            className="object-cover w-full h-64 sm:h-72 md:h-64 lg:h-72 grayscale
-                       group-hover:grayscale-0 group-hover:scale-105
-                       transition-all duration-700 ease-out"
-          />
-          <div className="absolute inset-0 bg-black/40 flex items-end justify-start p-6 transition-colors duration-500 group-hover:bg-black/20">
-            <p className="text-white text-lg font-semibold group-hover:-translate-y-1 transition-transform">
-              Craft & Culture
-            </p>
-          </div>
-        </Link>
-
-        {/* Card 3 */}
-        <Link href="#gallery" className="group relative rounded-2xl overflow-hidden">
-          <img
-            src="/images/ab3.webp"
-            alt="Our Spaces"
-            loading="lazy"
-            className="object-cover w-full h-64 sm:h-72 md:h-64 lg:h-72 grayscale
-                       group-hover:grayscale-0 group-hover:scale-105
-                       transition-all duration-700 ease-out"
-          />
-          <div className="absolute inset-0 bg-black/40 flex items-end justify-start p-6 transition-colors duration-500 group-hover:bg-black/20">
-            <p className="text-white text-lg font-semibold group-hover:-translate-y-1 transition-transform">
-              Our Spaces
-            </p>
-          </div>
-        </Link>
+            <div className="absolute inset-0 bg-black/40 sm:bg-black/40 sm:group-hover:bg-black/20
+                            flex items-end justify-start p-6 transition-colors duration-500">
+              <p className="text-white text-lg font-semibold sm:group-hover:-translate-y-1 transition-transform">
+                {item.title}
+              </p>
+            </div>
+          </Link>
+        ))}
 
         {/* Card 4 - Full Width */}
         <Link
@@ -95,12 +74,15 @@ export default function About() {
             src="/images/ab4.webp"
             alt="Let’s Brew Collaborations"
             loading="lazy"
-            className="object-cover w-full h-64 sm:h-80 md:h-96 lg:h-[300px] grayscale
-                       group-hover:grayscale-0 group-hover:scale-105
-                       transition-all duration-700 ease-out"
+            className="object-cover w-full h-64 sm:h-80 md:h-96 lg:h-[300px]
+                       transition-all duration-700 ease-out
+                       sm:grayscale sm:group-hover:grayscale-0
+                       sm:group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-black/40 flex items-end justify-start p-6 transition-colors duration-500 group-hover:bg-black/20">
-            <p className="text-white text-lg font-semibold group-hover:-translate-y-1 transition-transform">
+
+          <div className="absolute inset-0 bg-black/40 sm:bg-black/40 sm:group-hover:bg-black/20
+                          flex items-end justify-start p-6 transition-colors duration-500">
+            <p className="text-white text-lg font-semibold sm:group-hover:-translate-y-1 transition-transform">
               Let’s Brew Collaborations
             </p>
           </div>
